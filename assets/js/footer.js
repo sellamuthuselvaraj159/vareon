@@ -28,7 +28,7 @@
 
       <!-- Brand -->
       <div class="footer-brand">
-        <a href="${pfx}index.html" aria-label="Vareon Infotech Home">
+        <a href="${pfx || '/'}" aria-label="Vareon Infotech Home">
           <img src="${resolveAsset(LOGO_PATH)}" alt="Vareon Infotech" width="52" height="52" loading="lazy">
         </a>
         <p>Designing, developing and deploying intelligent AI Chatbots powered by OpenAI and Google Cloud to help businesses automate, grow, and deliver exceptional customer experiences.</p>
@@ -60,11 +60,11 @@
       <div>
         <p class="footer-col-title">Company</p>
         <ul class="footer-links">
-          <li><a href="${pfx}index.html">Home</a></li>
-          <li><a href="${pfx}about.html">About Us</a></li>
-          <li><a href="${pfx}services.html">Services</a></li>
-          <li><a href="${pfx}chatbot-solutions.html">Chatbot Solutions</a></li>
-          <li><a href="${pfx}contact.html">Contact Us</a></li>
+          <li><a href="${pfx || '/'}">Home</a></li>
+          <li><a href="${pfx}about">About Us</a></li>
+          <li><a href="${pfx}services">Services</a></li>
+          <li><a href="${pfx}chatbot-solutions">Chatbot Solutions</a></li>
+          <li><a href="${pfx}contact">Contact Us</a></li>
         </ul>
       </div>
 
@@ -72,12 +72,12 @@
       <div>
         <p class="footer-col-title">Solutions</p>
         <ul class="footer-links">
-          <li><a href="${pfx}chatbot-solutions.html#ai-customer-support">AI Customer Support</a></li>
-          <li><a href="${pfx}chatbot-solutions.html#healthcare-chatbots">Healthcare Chatbots</a></li>
-          <li><a href="${pfx}chatbot-solutions.html#whatsapp-chatbots">WhatsApp Chatbots</a></li>
-          <li><a href="${pfx}chatbot-solutions.html#lead-generation">Lead Generation</a></li>
-          <li><a href="${pfx}chatbot-solutions.html#appointment-booking">Appointment Booking</a></li>
-          <li><a href="${pfx}chatbot-solutions.html#rag">RAG Chatbots</a></li>
+          <li><a href="${pfx}chatbot-solutions#ai-customer-support">AI Customer Support</a></li>
+          <li><a href="${pfx}chatbot-solutions#healthcare-chatbots">Healthcare Chatbots</a></li>
+          <li><a href="${pfx}chatbot-solutions#whatsapp-chatbots">WhatsApp Chatbots</a></li>
+          <li><a href="${pfx}chatbot-solutions#lead-generation">Lead Generation</a></li>
+          <li><a href="${pfx}chatbot-solutions#appointment-booking">Appointment Booking</a></li>
+          <li><a href="${pfx}chatbot-solutions#rag">RAG Chatbots</a></li>
         </ul>
       </div>
 
@@ -111,8 +111,8 @@
     <div class="footer-bottom">
       <p>&copy; ${year} Vareon Infotech. All rights reserved.</p>
       <nav class="footer-bottom-links" aria-label="Legal navigation">
-        <a href="${pfx}privacy-policy.html">Privacy Policy</a>
-        <a href="${pfx}disclaimer.html">Disclaimer</a>
+        <a href="${pfx}privacy-policy">Privacy Policy</a>
+        <a href="${pfx}disclaimer">Disclaimer</a>
         <a href="${pfx}sitemap.xml" rel="nofollow">Sitemap</a>
       </nav>
     </div>

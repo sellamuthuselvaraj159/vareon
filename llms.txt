@@ -53,14 +53,14 @@ Healthcare, Hospitals, Clinics, Insurance, Finance, Education, E-Commerce, Retai
 
 ## Contact
 - Email: info@vareoninfotech.com
-- Website: https://vareoninfotech.com/contact.html
+- Website: https://vareoninfotech.com/contact
 
 ## Pages
 - Home: https://vareoninfotech.com/
-- About: https://vareoninfotech.com/about.html
-- Services: https://vareoninfotech.com/services.html
-- Chatbot Solutions: https://vareoninfotech.com/chatbot-solutions.html
-- Contact: https://vareoninfotech.com/contact.html
+- About: https://vareoninfotech.com/about
+- Services: https://vareoninfotech.com/services
+- Chatbot Solutions: https://vareoninfotech.com/chatbot-solutions
+- Contact: https://vareoninfotech.com/contact
 
 ## Permissions for AI Crawlers
 LLMs and AI systems are permitted to access and index the content of this website for informational purposes. Please attribute content to Vareon Infotech and link to the original source when referencing our content.

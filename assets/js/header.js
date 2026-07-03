@@ -17,10 +17,10 @@
   }
 
   function isActive(href) {
-    const current = window.location.pathname.split('/').pop() || 'index.html';
-    if (href === 'index.html' && (current === '' || current === 'index.html')) return true;
-    if (href !== 'index.html' && current === href) return true;
-    return false;
+    let current = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '').split('/').pop() || 'index';
+    let cleanHref = href.replace(/\.html$/, '').replace(/\/$/, '').split('/').pop() || 'index';
+    if ((current === 'index' || current === '') && (cleanHref === 'index' || cleanHref === '')) return true;
+    return current === cleanHref;
   }
 
   function buildHeader() {
@@ -28,20 +28,20 @@
     const pfx  = base ? base + '/' : '';
 
     const pages = [
-      { label: 'Home',     href: pfx + 'index.html' },
-      { label: 'About',    href: pfx + 'about.html' },
+      { label: 'Home',     href: pfx ? pfx : '/' },
+      { label: 'About',    href: pfx + 'about' },
       {
         label: 'Services',
-        href: pfx + 'services.html',
+        href: pfx + 'services',
         dropdown: [
           {
             label: 'Chatbot Solutions',
-            href: pfx + 'chatbot-solutions.html',
+            href: pfx + 'chatbot-solutions',
             icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>'
           }
         ]
       },
-      { label: 'Contact',  href: pfx + 'contact.html' }
+      { label: 'Contact',  href: pfx + 'contact' }
     ];
 
     const navItems = pages.map(page => {
@@ -73,7 +73,7 @@
 <header class="site-header" id="site-header" role="banner">
   <div class="container">
     <div class="header-inner">
-      <a href="${pfx}index.html" class="site-logo" aria-label="Vareon Infotech Home">
+      <a href="${pfx || '/'}" class="site-logo" aria-label="Vareon Infotech Home">
         <img src="${resolveAsset(LOGO_PATH)}" alt="Vareon Infotech Logo" width="48" height="48" loading="eager">
         <div class="logo-text">
           <span class="logo-name">Vareon Infotech</span>
@@ -87,7 +87,7 @@
         </ul>
       </nav>
 
-      <a href="${pfx}contact.html" class="btn btn-primary header-cta" aria-label="Get Free Consultation">
+      <a href="${pfx}contact" class="btn btn-primary header-cta" aria-label="Get Free Consultation">
         Get Free Consultation
       </a>
 
