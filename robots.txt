@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /404.html
+
+Sitemap: https://vareoninfotech.com/sitemap.xml
+Sitemap: https://vareoninfotech.com/page-sitemap.xml
+Sitemap: https://vareoninfotech.com/image-sitemap.xml

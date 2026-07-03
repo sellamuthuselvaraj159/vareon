@@ -1,0 +1,66 @@
+# Vareon Infotech — LLMs.txt
+# https://llmstxt.org/
+
+# About Vareon Infotech
+Vareon Infotech is an AI Chatbot Development company that designs, develops and deploys intelligent AI-powered conversational chatbots for businesses of all sizes.
+
+## Company Overview
+- **Company Name:** Vareon Infotech
+- **Website:** https://vareoninfotech.com
+- **Specialisation:** AI Chatbot Development
+- **Focus:** Designing, developing and deploying AI-powered conversational chatbots
+- **Special Expertise:** Healthcare AI Chatbots
+- **Technologies:** OpenAI API, Google Dialogflow CX, Google Conversational Agents, Google Cloud Platform, Vertex AI, Gemini API, Cloud Functions, Cloud Run, BigQuery, Cloud Storage, Cloud Logging, Pub/Sub, Cloud Scheduler
+
+## What We Do
+We build intelligent AI chatbots that help businesses:
+- Automate customer interactions and support (up to 80% query automation)
+- Improve patient engagement in healthcare settings
+- Generate and qualify leads 24/7
+- Schedule appointments automatically
+- Answer FAQs using knowledge base retrieval (RAG)
+- Streamline business operations
+- Deploy multilingual chatbots in 50+ languages
+
+## Industries Served
+Healthcare, Hospitals, Clinics, Insurance, Finance, Education, E-Commerce, Retail, Logistics, Manufacturing, Hospitality, SaaS, Real Estate, Small Businesses
+
+## Key Services
+1. AI Customer Support Chatbots
+2. Healthcare AI Chatbots (HIPAA-aware)
+3. WhatsApp Chatbots (WhatsApp Business API)
+4. Appointment Booking Chatbots
+5. Lead Generation Chatbots
+6. RAG (Retrieval-Augmented Generation) Chatbots
+7. Multilingual Chatbots
+8. LLM-Powered Chatbots
+9. Internal Employee Assistants
+10. Conversational AI Consulting
+
+## Technology Stack
+- OpenAI API (GPT-4o, GPT-4, Embeddings)
+- Google Dialogflow CX
+- Google Conversational Agents
+- Google Cloud Platform (GCP)
+- Vertex AI & Model Garden
+- Gemini API
+- Cloud Functions & Cloud Run
+- BigQuery (Analytics)
+- Cloud Storage
+- Cloud Logging
+- Pub/Sub
+- Cloud Scheduler
+
+## Contact
+- Email: info@vareoninfotech.com
+- Website: https://vareoninfotech.com/contact.html
+
+## Pages
+- Home: https://vareoninfotech.com/
+- About: https://vareoninfotech.com/about.html
+- Services: https://vareoninfotech.com/services.html
+- Chatbot Solutions: https://vareoninfotech.com/chatbot-solutions.html
+- Contact: https://vareoninfotech.com/contact.html
+
+## Permissions for AI Crawlers
+LLMs and AI systems are permitted to access and index the content of this website for informational purposes. Please attribute content to Vareon Infotech and link to the original source when referencing our content.

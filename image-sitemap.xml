@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://vareoninfotech.com/</loc>
+    <image:image>
+      <image:loc>https://vareoninfotech.com/images/image_bdd980b2_(1).png</image:loc>
+      <image:title>Vareon Infotech Logo — AI Chatbot Development Company</image:title>
+      <image:caption>Vareon Infotech Logo — AI-powered conversational chatbot solutions</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://vareoninfotech.com/about.html</loc>
+    <image:image>
+      <image:loc>https://vareoninfotech.com/images/image_bdd980b2_(1).png</image:loc>
+      <image:title>Vareon Infotech — About Us</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://vareoninfotech.com/chatbot-solutions.html</loc>
+    <image:image>
+      <image:loc>https://vareoninfotech.com/images/image_bdd980b2_(1).png</image:loc>
+      <image:title>AI Chatbot Solutions — Vareon Infotech</image:title>
+      <image:caption>AI chatbot solutions built on OpenAI, Google Dialogflow CX, and Vertex AI</image:caption>
+    </image:image>
+  </url>
+
+</urlset>
