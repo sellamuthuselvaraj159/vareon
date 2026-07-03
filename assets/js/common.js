@@ -203,23 +203,62 @@
       const btn = form.querySelector('[type="submit"]');
       const msg = form.querySelector('.form-message');
       btn.disabled = true;
-      btn.textContent = 'Sending…';
+      btn.textContent = 'Sending...';
 
-      // Simulate async submission (replace with real endpoint)
-      setTimeout(function () {
+      const formData = new FormData(form);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json
+      })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
         btn.disabled = false;
         btn.textContent = 'Send Message';
-        form.reset();
+        if (data.success) {
+          form.reset();
+          if (msg) {
+            msg.className = 'form-message success show';
+            msg.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Thank you! Your message has been sent successfully.`;
+            setTimeout(function () { msg.className = 'form-message'; }, 8000);
+          }
+        } else {
+          if (msg) {
+            msg.className = 'form-message error show';
+            msg.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              Unable to send your message. Please try again.`;
+            setTimeout(function () { msg.className = 'form-message'; }, 8000);
+          }
+        }
+      })
+      .catch(function (error) {
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
         if (msg) {
-          msg.className = 'form-message success show';
+          msg.className = 'form-message error show';
           msg.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
-            Thank you! Your message has been sent. We will respond within 1 business day.`;
+            Unable to send your message. Please try again.`;
           setTimeout(function () { msg.className = 'form-message'; }, 8000);
         }
-      }, 1200);
+      });
     });
   }
 
