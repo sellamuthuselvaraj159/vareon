@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  const LOGO_PATH = 'images/image_bdd980b2_(1).png';
+  const LOGO_PATH = 'images/vareon-technologies-logo.png';
 
   function getBasePath() {
     const depth = document.querySelector('meta[name="page-depth"]');
@@ -25,11 +25,11 @@
 
   function buildHeader() {
     const base = getBasePath();
-    const pfx  = base ? base + '/' : '';
+    const pfx = base ? base + '/' : '';
 
     const pages = [
-      { label: 'Home',     href: pfx ? pfx : '/' },
-      { label: 'About',    href: pfx + 'about' },
+      { label: 'Home', href: pfx ? pfx : '/' },
+      { label: 'About', href: pfx + 'about' },
       {
         label: 'Services',
         href: pfx + 'services',
@@ -41,7 +41,7 @@
           }
         ]
       },
-      { label: 'Contact',  href: pfx + 'contact' }
+      { label: 'Contact', href: pfx + 'contact' }
     ];
 
     const navItems = pages.map(page => {
@@ -111,7 +111,7 @@
   function initHeaderBehavior() {
     const header = document.getElementById('site-header');
     const toggle = document.getElementById('nav-toggle');
-    const nav    = document.getElementById('site-nav');
+    const nav = document.getElementById('site-nav');
 
     if (!header || !toggle || !nav) return;
 
