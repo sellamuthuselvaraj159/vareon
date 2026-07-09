@@ -74,9 +74,9 @@
   <div class="container">
     <div class="header-inner">
       <a href="${pfx || '/'}" class="site-logo" aria-label="Vareon Infotech Home">
-        <img src="${resolveAsset(LOGO_PATH)}" alt="Vareon Infotech Logo" width="48" height="48" loading="eager">
+        <img src="${resolveAsset(LOGO_PATH)}" alt="Vareon Technologies Logo" width="48" height="48" loading="eager">
         <div class="logo-text">
-          <span class="logo-name">Vareon Infotech</span>
+          <span class="logo-name">Vareon Technologies</span>
           <span class="logo-tagline">AI Chatbot Solutions</span>
         </div>
       </a>

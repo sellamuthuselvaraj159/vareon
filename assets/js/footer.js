@@ -109,7 +109,7 @@
     </div><!-- /footer-grid -->
 
     <div class="footer-bottom">
-      <p>&copy; ${year} Vareon Infotech. All rights reserved.</p>
+      <p>&copy; ${year} Vareon Technologies. All rights reserved.</p>
       <nav class="footer-bottom-links" aria-label="Legal navigation">
         <a href="${pfx}privacy-policy">Privacy Policy</a>
         <a href="${pfx}disclaimer">Disclaimer</a>
