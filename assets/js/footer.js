@@ -117,7 +117,11 @@
       </nav>
     </div>
   </div>
-</footer>`;
+</footer>
+<!-- Chat Widget -->
+<div id="vareon-chat-widget"></div>
+
+`;
 
     const placeholder = document.getElementById('footer-placeholder') || document.getElementById('footer');
     if (placeholder) {
