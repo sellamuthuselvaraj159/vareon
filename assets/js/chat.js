@@ -1,12 +1,12 @@
 (function () {
 
-    const root = document.getElementById("vareon-chat-widget");
+  const root = document.getElementById("vareon-chat-widget");
 
-    if (!root) return;
+  if (!root) return;
 
-    root.innerHTML = `
+  root.innerHTML = `
       <!-- ============ WIDGET ROOT ============ -->
-<div id="vareon-chat-widget">
+
 <div id="vareon-chat-root">
 
 
@@ -179,7 +179,11 @@
 
   <button id="vrn-launcher" type="button" aria-label="Open chat">
 
-    <svg class="vrn-spark-ico" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4L12 2z" fill="#fff"/></svg>
+   <svg class="vrn-spark-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z"/>
+</svg>
 
     <svg class="vrn-close-ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
 
@@ -188,594 +192,593 @@
 
 
 </div>
-</div>
 
 
     `;
 
-    (function () {
+  (function () {
 
-        "use strict";
+    "use strict";
 
 
 
-        // ============================================================
+    // ============================================================
 
-        // CONFIGURATION — same backend as your original widget
+    // CONFIGURATION — same backend as your original widget
 
-        // ============================================================
+    // ============================================================
 
-        const BOT_API_URL = "https://instagram-chatbot-llm.onrender.com/webchat/message";
+    const BOT_API_URL = "https://instagram-chatbot-llm.onrender.com/webchat/message";
 
 
 
-        // ============================================================
+    // ============================================================
 
-        // SESSION MANAGEMENT (unchanged behavior)
+    // SESSION MANAGEMENT (unchanged behavior)
 
-        // ============================================================
+    // ============================================================
 
-        function getSessionId() {
+    function getSessionId() {
 
-            let id = sessionStorage.getItem("vareon_chat_session");
+      let id = sessionStorage.getItem("vareon_chat_session");
 
-            if (!id) {
+      if (!id) {
 
-                id = "web_" + Date.now() + "_" + Math.random().toString(36).substring(2, 10);
+        id = "web_" + Date.now() + "_" + Math.random().toString(36).substring(2, 10);
 
-                sessionStorage.setItem("vareon_chat_session", id);
+        sessionStorage.setItem("vareon_chat_session", id);
 
-            }
+      }
 
-            return id;
+      return id;
 
-        }
+    }
 
 
 
-        // ============================================================
+    // ============================================================
 
-        // ELEMENT REFS
+    // ELEMENT REFS
 
-        // ============================================================
+    // ============================================================
 
-        const launcher = document.getElementById("vrn-launcher");
+    const launcher = document.getElementById("vrn-launcher");
 
-        const panel = document.getElementById("vrn-panel");
+    const panel = document.getElementById("vrn-panel");
 
-        const closeBtn = document.getElementById("vrn-close");
+    const closeBtn = document.getElementById("vrn-close");
 
-        const body = document.getElementById("vrn-body");
+    const body = document.getElementById("vrn-body");
 
-        const welcome = document.getElementById("vrn-welcome");
+    const welcome = document.getElementById("vrn-welcome");
 
-        const messagesEl = document.getElementById("vrn-messages");
+    const messagesEl = document.getElementById("vrn-messages");
 
-        const typingEl = document.getElementById("vrn-typing");
+    const typingEl = document.getElementById("vrn-typing");
 
-        const input = document.getElementById("vrn-input");
+    const input = document.getElementById("vrn-input");
 
-        const sendBtn = document.getElementById("vrn-send");
+    const sendBtn = document.getElementById("vrn-send");
 
-        const voiceBtn = document.getElementById("vrn-voice");
+    const voiceBtn = document.getElementById("vrn-voice");
 
-        const quickGrid = document.getElementById("vrn-quick-grid");
+    const quickGrid = document.getElementById("vrn-quick-grid");
 
-        const greeting = document.getElementById("vrn-greeting");
+    const greeting = document.getElementById("vrn-greeting");
 
-        const greetingText = document.getElementById("vrn-greeting-text");
+    const greetingText = document.getElementById("vrn-greeting-text");
 
-        const greetingClose = document.getElementById("vrn-greeting-close");
+    const greetingClose = document.getElementById("vrn-greeting-close");
 
 
 
-        let isSending = false;
+    let isSending = false;
 
 
 
-        // ============================================================
+    // ============================================================
 
-        // OPEN / CLOSE
+    // OPEN / CLOSE
 
-        // ============================================================
+    // ============================================================
 
-        function openChat() {
+    function openChat() {
 
-            panel.classList.add("open");
+      panel.classList.add("open");
 
-            launcher.classList.add("open");
+      launcher.classList.add("open");
 
-            hideGreeting(true);
+      hideGreeting(true);
 
-            stopGreetingCycle();
+      stopGreetingCycle();
 
-            setTimeout(() => input.focus(), 200);
+      setTimeout(() => input.focus(), 200);
 
-        }
+    }
 
-        function closeChat() {
+    function closeChat() {
 
-            panel.classList.remove("open");
+      panel.classList.remove("open");
 
-            launcher.classList.remove("open");
+      launcher.classList.remove("open");
 
-        }
+    }
 
-        function toggleChat() {
+    function toggleChat() {
 
-            panel.classList.contains("open") ? closeChat() : openChat();
+      panel.classList.contains("open") ? closeChat() : openChat();
 
-        }
+    }
 
-        launcher.addEventListener("click", toggleChat);
+    launcher.addEventListener("click", toggleChat);
 
-        closeBtn.addEventListener("click", closeChat);
+    closeBtn.addEventListener("click", closeChat);
 
 
 
-        // ============================================================
+    // ============================================================
 
-        // GREETING TEASER BUBBLE
+    // GREETING TEASER BUBBLE
 
-        // Cycles through friendly nudges while the chat is closed.
+    // Cycles through friendly nudges while the chat is closed.
 
-        // Stops for good once the person opens the chat or dismisses it.
+    // Stops for good once the person opens the chat or dismisses it.
 
-        // ============================================================
+    // ============================================================
 
-        const greetingMessages = [
+    const greetingMessages = [
 
-            "Hi there! 👋",
+      "Hi there! 👋",
 
-            "Hey! Need any help?",
+      "Hey! Need any help?",
 
-            "Hey cutie, try me! ✨",
+      "Hey cutie, try me! ✨",
 
-            "Got a question? Ask away!",
+      "Got a question? Ask away!",
 
-            "I'm here whenever you're ready."
+      "I'm here whenever you're ready."
 
-        ];
+    ];
 
-        let greetingIndex = 0;
+    let greetingIndex = 0;
 
-        let greetingDismissed = false;
+    let greetingDismissed = false;
 
-        let greetingShowTimer = null;
+    let greetingShowTimer = null;
 
-        let greetingCycleTimer = null;
+    let greetingCycleTimer = null;
 
 
 
-        function showGreeting() {
+    function showGreeting() {
+
+      if (greetingDismissed || panel.classList.contains("open")) return;
+
+      greetingText.textContent = greetingMessages[greetingIndex % greetingMessages.length];
+
+      greeting.classList.add("show");
+
+    }
+
+
+
+    function hideGreeting(immediate) {
+
+      greeting.classList.remove("show");
+
+    }
+
+
+
+    function stopGreetingCycle() {
+
+      clearTimeout(greetingShowTimer);
+
+      clearInterval(greetingCycleTimer);
+
+    }
+
+
+
+    function startGreetingCycle() {
+
+      // First appearance shortly after the page loads
+
+      greetingShowTimer = setTimeout(() => {
+
+        showGreeting();
+
+        // Then rotate: visible for ~4s, hidden for ~5s, next message
+
+        greetingCycleTimer = setInterval(() => {
+
+          if (greetingDismissed || panel.classList.contains("open")) return;
+
+          hideGreeting();
+
+          setTimeout(() => {
 
             if (greetingDismissed || panel.classList.contains("open")) return;
 
-            greetingText.textContent = greetingMessages[greetingIndex % greetingMessages.length];
+            greetingIndex++;
 
-            greeting.classList.add("show");
+            showGreeting();
+
+          }, 400);
+
+        }, 4500);
+
+      }, 1500);
+
+    }
+
+
+
+    greetingClose.addEventListener("click", (e) => {
+
+      e.stopPropagation();
+
+      greetingDismissed = true;
+
+      hideGreeting();
+
+      stopGreetingCycle();
+
+    });
+
+
+
+    // Clicking the bubble itself opens the chat
+
+    greeting.addEventListener("click", () => {
+
+      openChat();
+
+    });
+
+
+
+    startGreetingCycle();
+
+
+
+    // ============================================================
+
+    // MINIMAL SAFE MARKDOWN (escape first, then re-introduce a
+
+    // small, fixed set of tags we generate ourselves)
+
+    // ============================================================
+
+    function escapeHtml(str) {
+
+      return str
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;");
+
+    }
+
+
+
+    function renderBotHtml(raw) {
+
+      const escaped = escapeHtml(raw);
+
+      const lines = escaped.split(/\r?\n/);
+
+      let html = "";
+
+      let inList = false;
+
+
+
+      lines.forEach(line => {
+
+        const numbered = line.match(/^\s*\d+[.)]\s+(.*)/);
+
+        if (numbered) {
+
+          if (!inList) { html += "<ol>"; inList = true; }
+
+          html += "<li>" + boldify(numbered[1]) + "</li>";
+
+        } else {
+
+          if (inList) { html += "</ol>"; inList = false; }
+
+          if (line.trim() === "") {
+
+            html += "";
+
+          } else {
+
+            html += "<p>" + boldify(line) + "</p>";
+
+          }
 
         }
 
+      });
 
+      if (inList) html += "</ol>";
 
-        function hideGreeting(immediate) {
+      return html || "<p></p>";
 
-            greeting.classList.remove("show");
-
-        }
-
-
-
-        function stopGreetingCycle() {
-
-            clearTimeout(greetingShowTimer);
-
-            clearInterval(greetingCycleTimer);
-
-        }
+    }
 
 
 
-        function startGreetingCycle() {
+    function boldify(str) {
 
-            // First appearance shortly after the page loads
+      return str.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
 
-            greetingShowTimer = setTimeout(() => {
-
-                showGreeting();
-
-                // Then rotate: visible for ~4s, hidden for ~5s, next message
-
-                greetingCycleTimer = setInterval(() => {
-
-                    if (greetingDismissed || panel.classList.contains("open")) return;
-
-                    hideGreeting();
-
-                    setTimeout(() => {
-
-                        if (greetingDismissed || panel.classList.contains("open")) return;
-
-                        greetingIndex++;
-
-                        showGreeting();
-
-                    }, 400);
-
-                }, 4500);
-
-            }, 1500);
-
-        }
+    }
 
 
 
-        greetingClose.addEventListener("click", (e) => {
+    // ============================================================
 
-            e.stopPropagation();
+    // MESSAGE RENDERING
 
-            greetingDismissed = true;
+    // ============================================================
 
-            hideGreeting();
+    function hideWelcome() {
 
-            stopGreetingCycle();
+      if (welcome.style.display !== "none") {
+
+        welcome.style.display = "none";
+
+      }
+
+    }
+
+
+
+    function addUserMessage(text) {
+
+      hideWelcome();
+
+      const row = document.createElement("div");
+
+      row.className = "vrn-row user";
+
+      const bubble = document.createElement("div");
+
+      bubble.className = "vrn-bubble user";
+
+      bubble.textContent = text; // plain text, no injection risk
+
+      row.appendChild(bubble);
+
+      messagesEl.appendChild(row);
+
+      scrollToBottom();
+
+    }
+
+
+
+    function addBotMessage(text) {
+
+      hideWelcome();
+
+      const row = document.createElement("div");
+
+      row.className = "vrn-row bot";
+
+
+
+      const avatar = document.createElement("div");
+
+      avatar.className = "vrn-bot-mini-avatar";
+
+      avatar.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4L12 2z" fill="#fff"/></svg>';
+
+
+
+      const bubble = document.createElement("div");
+
+      bubble.className = "vrn-bubble bot";
+
+      bubble.innerHTML = renderBotHtml(text); // safe: escaped, then limited tags re-added
+
+
+
+      row.appendChild(avatar);
+
+      row.appendChild(bubble);
+
+      messagesEl.appendChild(row);
+
+      scrollToBottom();
+
+    }
+
+
+
+    function scrollToBottom() {
+
+      body.scrollTop = body.scrollHeight;
+
+    }
+
+
+
+    function showTyping() {
+
+      typingEl.classList.add("show");
+
+      scrollToBottom();
+
+    }
+
+    function hideTyping() {
+
+      typingEl.classList.remove("show");
+
+    }
+
+
+
+    // ============================================================
+
+    // SEND MESSAGE
+
+    // ============================================================
+
+    async function sendMessage(text) {
+
+      const message = (text !== undefined ? text : input.value).trim();
+
+      if (!message || isSending) return;
+
+
+
+      isSending = true;
+
+      sendBtn.disabled = true;
+
+
+
+      addUserMessage(message);
+
+      input.value = "";
+
+      showTyping();
+
+
+
+      try {
+
+        const response = await fetch(BOT_API_URL, {
+
+          method: "POST",
+
+          headers: { "Content-Type": "application/json" },
+
+          body: JSON.stringify({ message: message, sessionId: getSessionId() })
 
         });
 
 
 
-        // Clicking the bubble itself opens the chat
+        const data = await response.json();
 
-        greeting.addEventListener("click", () => {
+        if (!response.ok) {
 
-            openChat();
-
-        });
-
-
-
-        startGreetingCycle();
-
-
-
-        // ============================================================
-
-        // MINIMAL SAFE MARKDOWN (escape first, then re-introduce a
-
-        // small, fixed set of tags we generate ourselves)
-
-        // ============================================================
-
-        function escapeHtml(str) {
-
-            return str
-
-                .replace(/&/g, "&amp;")
-
-                .replace(/</g, "&lt;")
-
-                .replace(/>/g, "&gt;");
+          throw new Error(data.error || "Server returned an error.");
 
         }
 
 
 
-        function renderBotHtml(raw) {
-
-            const escaped = escapeHtml(raw);
-
-            const lines = escaped.split(/\r?\n/);
-
-            let html = "";
-
-            let inList = false;
+        hideTyping();
 
 
 
-            lines.forEach(line => {
+        if (data.reply) {
 
-                const numbered = line.match(/^\s*\d+[.)]\s+(.*)/);
+          addBotMessage(data.reply);
 
-                if (numbered) {
+        } else {
 
-                    if (!inList) { html += "<ol>"; inList = true; }
-
-                    html += "<li>" + boldify(numbered[1]) + "</li>";
-
-                } else {
-
-                    if (inList) { html += "</ol>"; inList = false; }
-
-                    if (line.trim() === "") {
-
-                        html += "";
-
-                    } else {
-
-                        html += "<p>" + boldify(line) + "</p>";
-
-                    }
-
-                }
-
-            });
-
-            if (inList) html += "</ol>";
-
-            return html || "<p></p>";
+          addBotMessage("Sorry, I couldn't generate a response. Please try again.");
 
         }
 
 
 
-        function boldify(str) {
+        if (data.sessionId) {
 
-            return str.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-
-        }
-
-
-
-        // ============================================================
-
-        // MESSAGE RENDERING
-
-        // ============================================================
-
-        function hideWelcome() {
-
-            if (welcome.style.display !== "none") {
-
-                welcome.style.display = "none";
-
-            }
+          sessionStorage.setItem("vareon_chat_session", data.sessionId);
 
         }
 
 
 
-        function addUserMessage(text) {
+      } catch (err) {
 
-            hideWelcome();
+        console.error("[Vareon WebChat]", err);
 
-            const row = document.createElement("div");
+        hideTyping();
 
-            row.className = "vrn-row user";
+        addBotMessage("I'm having trouble connecting right now. Please try again in a moment.");
 
-            const bubble = document.createElement("div");
+      } finally {
 
-            bubble.className = "vrn-bubble user";
+        isSending = false;
 
-            bubble.textContent = text; // plain text, no injection risk
+        sendBtn.disabled = false;
 
-            row.appendChild(bubble);
+        input.focus();
 
-            messagesEl.appendChild(row);
+      }
 
-            scrollToBottom();
+    }
 
-        }
 
 
+    sendBtn.addEventListener("click", () => sendMessage());
 
-        function addBotMessage(text) {
+    input.addEventListener("keydown", (e) => {
 
-            hideWelcome();
+      if (e.key === "Enter" && !e.shiftKey) {
 
-            const row = document.createElement("div");
+        e.preventDefault();
 
-            row.className = "vrn-row bot";
+        sendMessage();
 
+      }
 
+    });
 
-            const avatar = document.createElement("div");
 
-            avatar.className = "vrn-bot-mini-avatar";
 
-            avatar.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4L12 2z" fill="#fff"/></svg>';
+    // Quick prompt cards
 
+    quickGrid.addEventListener("click", (e) => {
 
+      const card = e.target.closest(".vrn-quick-card");
 
-            const bubble = document.createElement("div");
+      if (!card) return;
 
-            bubble.className = "vrn-bubble bot";
+      sendMessage(card.dataset.prompt);
 
-            bubble.innerHTML = renderBotHtml(text); // safe: escaped, then limited tags re-added
+    });
 
 
 
-            row.appendChild(avatar);
+    // Voice button — visual affordance only (no live speech-to-text wired up).
 
-            row.appendChild(bubble);
+    // Swap this handler for the Web Speech API or your provider of choice
 
-            messagesEl.appendChild(row);
+    // when you're ready to make it functional.
 
-            scrollToBottom();
+    voiceBtn.addEventListener("click", () => {
 
-        }
+      voiceBtn.classList.toggle("listening");
 
+      if (voiceBtn.classList.contains("listening")) {
 
+        input.placeholder = "Listening…";
 
-        function scrollToBottom() {
+        setTimeout(() => {
 
-            body.scrollTop = body.scrollHeight;
+          voiceBtn.classList.remove("listening");
 
-        }
+          input.placeholder = "How can I help you?";
 
+        }, 2200);
 
+      }
 
-        function showTyping() {
+    });
 
-            typingEl.classList.add("show");
 
-            scrollToBottom();
 
-        }
-
-        function hideTyping() {
-
-            typingEl.classList.remove("show");
-
-        }
-
-
-
-        // ============================================================
-
-        // SEND MESSAGE
-
-        // ============================================================
-
-        async function sendMessage(text) {
-
-            const message = (text !== undefined ? text : input.value).trim();
-
-            if (!message || isSending) return;
-
-
-
-            isSending = true;
-
-            sendBtn.disabled = true;
-
-
-
-            addUserMessage(message);
-
-            input.value = "";
-
-            showTyping();
-
-
-
-            try {
-
-                const response = await fetch(BOT_API_URL, {
-
-                    method: "POST",
-
-                    headers: { "Content-Type": "application/json" },
-
-                    body: JSON.stringify({ message: message, sessionId: getSessionId() })
-
-                });
-
-
-
-                const data = await response.json();
-
-                if (!response.ok) {
-
-                    throw new Error(data.error || "Server returned an error.");
-
-                }
-
-
-
-                hideTyping();
-
-
-
-                if (data.reply) {
-
-                    addBotMessage(data.reply);
-
-                } else {
-
-                    addBotMessage("Sorry, I couldn't generate a response. Please try again.");
-
-                }
-
-
-
-                if (data.sessionId) {
-
-                    sessionStorage.setItem("vareon_chat_session", data.sessionId);
-
-                }
-
-
-
-            } catch (err) {
-
-                console.error("[Vareon WebChat]", err);
-
-                hideTyping();
-
-                addBotMessage("I'm having trouble connecting right now. Please try again in a moment.");
-
-            } finally {
-
-                isSending = false;
-
-                sendBtn.disabled = false;
-
-                input.focus();
-
-            }
-
-        }
-
-
-
-        sendBtn.addEventListener("click", () => sendMessage());
-
-        input.addEventListener("keydown", (e) => {
-
-            if (e.key === "Enter" && !e.shiftKey) {
-
-                e.preventDefault();
-
-                sendMessage();
-
-            }
-
-        });
-
-
-
-        // Quick prompt cards
-
-        quickGrid.addEventListener("click", (e) => {
-
-            const card = e.target.closest(".vrn-quick-card");
-
-            if (!card) return;
-
-            sendMessage(card.dataset.prompt);
-
-        });
-
-
-
-        // Voice button — visual affordance only (no live speech-to-text wired up).
-
-        // Swap this handler for the Web Speech API or your provider of choice
-
-        // when you're ready to make it functional.
-
-        voiceBtn.addEventListener("click", () => {
-
-            voiceBtn.classList.toggle("listening");
-
-            if (voiceBtn.classList.contains("listening")) {
-
-                input.placeholder = "Listening…";
-
-                setTimeout(() => {
-
-                    voiceBtn.classList.remove("listening");
-
-                    input.placeholder = "How can I help you?";
-
-                }, 2200);
-
-            }
-
-        });
-
-
-
-    })();
+  })();
 })();
