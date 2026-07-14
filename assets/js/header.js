@@ -87,8 +87,8 @@
         </ul>
       </nav>
 
-      <a href="${pfx}contact" class="btn btn-primary header-cta" aria-label="Get Free Consultation">
-        Get Free Consultation
+      <a href="${pfx}contact" class="btn btn-primary header-cta" aria-label="Get Free Demo">
+        Get Free Demo
       </a>
 
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="site-nav">

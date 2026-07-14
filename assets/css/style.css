@@ -242,7 +242,7 @@ p {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 0.75rem 1.75rem;
+  padding: 0.55rem 1.55rem;
   border-radius: var(--radius-md);
   font-size: 0.9375rem;
   font-weight: 600;
@@ -514,6 +514,8 @@ p {
 
 /* CTA Button in header */
 .header-cta {
+
+
   margin-left: var(--space-4);
 }
 
@@ -2518,4 +2520,8 @@ select.form-control {
   html {
     scroll-behavior: auto;
   }
+}
+
+.built {
+  justify-items: center;
 }
