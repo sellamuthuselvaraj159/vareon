@@ -41,6 +41,1135 @@
         </div>
       </div>
     </div>
+    <!-- =========================================================
+  INTERACTIVE PRICING CALCULATOR
+  Pick a base plan + increase limits with sliders/dropdowns,
+  price recalculates live. Drop this block into your page.
+========================================================== -->
+    <section class="pc-section">
+
+      <div class="pc-header">
+        <h2>Build Your Plan</h2>
+        <p>Choose a starting plan, then adjust the limits you need. Your price updates automatically.</p>
+      </div>
+
+      <div class="pc-wrap">
+
+        <!-- LEFT: Plan tiers -->
+        <div class="pc-plans">
+          <div class="pc-plan" data-plan="free">
+            <span class="pc-dot free"></span>
+            <div>
+              <div class="pc-plan-name">Starter</div>
+              <div class="pc-plan-price">Free</div>
+            </div>
+          </div>
+          <div class="pc-plan active" data-plan="bronze">
+            <span class="pc-dot bronze"></span>
+            <div>
+              <div class="pc-plan-name">Bronze</div>
+              <div class="pc-plan-price">from $39/mo</div>
+            </div>
+          </div>
+          <div class="pc-plan" data-plan="silver">
+            <span class="pc-dot silver"></span>
+            <div>
+              <div class="pc-plan-name">Silver</div>
+              <div class="pc-plan-price">from $49/mo</div>
+            </div>
+          </div>
+          <div class="pc-plan" data-plan="gold">
+            <span class="pc-dot gold"></span>
+            <div>
+              <div class="pc-plan-name">Gold</div>
+              <div class="pc-plan-price">from $129/mo</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MIDDLE: Sliders -->
+        <div class="pc-controls">
+
+          <div class="pc-row">
+            <div class="pc-row-label">
+              <span>Monthly Submissions</span>
+              <strong id="valSubmissions">100</strong>
+            </div>
+            <input type="range" id="rngSubmissions" min="0" max="6" value="0" step="1">
+            <div class="pc-scale">
+              <span>100</span><span>1K</span><span>2.5K</span><span>10K</span><span>25K</span><span>50K</span><span>100K</span>
+            </div>
+          </div>
+
+          <div class="pc-row">
+            <div class="pc-row-label">
+              <span>Users</span>
+              <strong id="valUsers">1</strong>
+            </div>
+            <input type="range" id="rngUsers" min="0" max="4" value="0" step="1">
+            <div class="pc-scale"><span>1</span><span>3</span><span>5</span><span>10</span><span>Unlimited</span></div>
+          </div>
+
+          <div class="pc-row">
+            <div class="pc-row-label">
+              <span>Storage Space</span>
+              <strong id="valStorage">500MB</strong>
+            </div>
+            <input type="range" id="rngStorage" min="0" max="5" value="0" step="1">
+            <div class="pc-scale">
+              <span>500MB</span><span>1GB</span><span>2GB</span><span>5GB</span><span>10GB</span><span>100GB</span>
+            </div>
+          </div>
+
+          <div class="pc-row">
+            <div class="pc-row-label">
+              <span>Form Views / month</span>
+              <strong id="valViews">100</strong>
+            </div>
+            <input type="range" id="rngViews" min="0" max="5" value="0" step="1">
+            <div class="pc-scale">
+              <span>100</span><span>10K</span><span>28K</span><span>100K</span><span>500K</span><span>Unlimited</span>
+            </div>
+          </div>
+
+          <div class="pc-toggles">
+            <label class="pc-check">
+              <input type="checkbox" id="chkDomain">
+              <span>Custom Domain <em>+$10/mo</em></span>
+            </label>
+            <label class="pc-check">
+              <input type="checkbox" id="chkHipaa">
+              <span>HIPAA Compliance <em>+$40/mo</em></span>
+            </label>
+            <label class="pc-check">
+              <input type="checkbox" id="chkBranding">
+              <span>Remove Branding <em>+$5/mo</em></span>
+            </label>
+          </div>
+
+          <div class="pc-billing">
+            <button class="pc-bill-btn active" data-cycle="monthly">Monthly</button>
+            <button class="pc-bill-btn" data-cycle="yearly">Yearly <span>Save 20%</span></button>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Summary -->
+        <div class="pc-summary">
+          <div class="pc-summary-plan" id="summaryPlanName">Bronze Plan</div>
+          <div class="pc-summary-price">
+            <span class="pc-currency">$</span><span id="summaryPrice">39</span><span class="pc-per"
+              id="summaryPer">/month</span>
+          </div>
+          <div class="pc-summary-note" id="summaryNote">Billed monthly</div>
+
+          <ul class="pc-summary-list" id="summaryList">
+            <!-- filled by JS -->
+          </ul>
+
+          <a href="#" class="pc-cta">Get Started</a>
+          <p class="pc-fine">No credit card required for Starter plan</p>
+        </div>
+
+      </div>
+    </section>
+
+    <style>
+      .pc-section {
+        --free: #22c55e;
+        --bronze: #e2601c;
+        --silver: #2563eb;
+        --gold: #e6a91a;
+        --dark: #1f2430;
+        --muted: #6b7280;
+        --bg: #f4f5fb;
+        font-family: "Segoe UI", Arial, sans-serif;
+        color: var(--dark);
+        padding: 48px 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
+      .pc-section * {
+        box-sizing: border-box;
+      }
+
+      .pc-header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .pc-header h2 {
+        font-size: 28px;
+        margin: 0 0 8px;
+      }
+
+      .pc-header p {
+        color: var(--muted);
+        margin: 0;
+        font-size: 14px;
+      }
+
+      .pc-wrap {
+        display: grid;
+        grid-template-columns: 200px 1fr 300px;
+        gap: 20px;
+        align-items: start;
+      }
+
+      @media(max-width:900px) {
+        .pc-wrap {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Plan selector */
+      .pc-plans {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .pc-plan {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--bg);
+        border: 2px solid transparent;
+        border-radius: 10px;
+        padding: 12px 14px;
+        cursor: pointer;
+        transition: all .15s ease;
+      }
+
+      .pc-plan:hover {
+        background: #eceef7;
+      }
+
+      .pc-plan.active {
+        border-color: var(--silver);
+        background: #fff;
+        box-shadow: 0 3px 10px rgba(37, 99, 235, .15);
+      }
+
+      .pc-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        flex: none;
+      }
+
+      .pc-dot.free {
+        background: var(--free);
+      }
+
+      .pc-dot.bronze {
+        background: var(--bronze);
+      }
+
+      .pc-dot.silver {
+        background: var(--silver);
+      }
+
+      .pc-dot.gold {
+        background: var(--gold);
+      }
+
+      .pc-plan-name {
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .pc-plan-price {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      /* Controls */
+      .pc-controls {
+        background: var(--bg);
+        border-radius: 14px;
+        padding: 24px;
+      }
+
+      .pc-row {
+        margin-bottom: 22px;
+      }
+
+      .pc-row-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .pc-row-label strong {
+        color: var(--silver);
+      }
+
+      .pc-row input[type=range] {
+        width: 100%;
+        accent-color: var(--silver);
+        height: 6px;
+      }
+
+      .pc-scale {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+
+      .pc-toggles {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 8px;
+        padding-top: 16px;
+        border-top: 1px solid #dfe2ee;
+      }
+
+      .pc-check {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .pc-check input {
+        accent-color: var(--silver);
+        width: 16px;
+        height: 16px;
+      }
+
+      .pc-check em {
+        color: var(--muted);
+        font-style: normal;
+        font-size: 12px;
+      }
+
+      .pc-billing {
+        display: flex;
+        gap: 8px;
+        margin-top: 20px;
+      }
+
+      .pc-bill-btn {
+        flex: 1;
+        padding: 9px 0;
+        border: 1px solid #d9dcea;
+        background: #fff;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        color: var(--muted);
+      }
+
+      .pc-bill-btn span {
+        color: var(--free);
+        font-size: 11px;
+        margin-left: 4px;
+      }
+
+      .pc-bill-btn.active {
+        border-color: var(--silver);
+        color: var(--silver);
+        background: #eaf1ff;
+      }
+
+      /* Summary */
+      .pc-summary {
+        background: #fff;
+        border: 2px solid var(--silver);
+        border-radius: 14px;
+        padding: 24px;
+        text-align: center;
+        position: sticky;
+        top: 20px;
+      }
+
+      .pc-summary-plan {
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 4px;
+        color: var(--bronze);
+      }
+
+      .pc-summary-price {
+        font-size: 38px;
+        font-weight: 800;
+      }
+
+      .pc-currency {
+        font-size: 20px;
+        vertical-align: top;
+        position: relative;
+        top: 6px;
+      }
+
+      .pc-per {
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .pc-summary-note {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+
+      .pc-summary-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px;
+        text-align: left;
+      }
+
+      .pc-summary-list li {
+        font-size: 13px;
+        padding: 6px 0 6px 20px;
+        border-bottom: 1px solid #eef0f7;
+        position: relative;
+      }
+
+      .pc-summary-list li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #16a34a;
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      .pc-cta {
+        display: block;
+        background: var(--silver);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 700;
+        padding: 12px 0;
+        border-radius: 8px;
+        transition: opacity .2s ease;
+      }
+
+      .pc-cta:hover {
+        opacity: .88;
+      }
+
+      .pc-fine {
+        font-size: 11px;
+        color: var(--muted);
+        margin: 10px 0 0;
+      }
+    </style>
+
+    <script>
+      (function () {
+        // ---- Step data (index -> value/label/extra cost added at that step) ----
+        var submissionsSteps = [
+          { label: "100", cost: 0 },
+          { label: "1K", cost: 15 },
+          { label: "2.5K", cost: 25 },
+          { label: "10K", cost: 45 },
+          { label: "25K", cost: 70 },
+          { label: "50K", cost: 100 },
+          { label: "100K", cost: 140 }
+        ];
+        var usersSteps = [
+          { label: "1", cost: 0 },
+          { label: "3", cost: 20 },
+          { label: "5", cost: 35 },
+          { label: "10", cost: 60 },
+          { label: "Unlimited", cost: 100 }
+        ];
+        var storageSteps = [
+          { label: "500MB", cost: 0 },
+          { label: "1GB", cost: 8 },
+          { label: "2GB", cost: 15 },
+          { label: "5GB", cost: 30 },
+          { label: "10GB", cost: 50 },
+          { label: "100GB", cost: 90 }
+        ];
+        var viewsSteps = [
+          { label: "100", cost: 0 },
+          { label: "10K", cost: 10 },
+          { label: "28K", cost: 18 },
+          { label: "100K", cost: 35 },
+          { label: "500K", cost: 60 },
+          { label: "Unlimited", cost: 90 }
+        ];
+
+        var basePlans = {
+          free: { name: "Starter Plan", base: 0, color: "var(--free)" },
+          bronze: { name: "Bronze Plan", base: 39, color: "var(--bronze)" },
+          silver: { name: "Silver Plan", base: 49, color: "var(--silver)" },
+          gold: { name: "Gold Plan", base: 129, color: "var(--gold)" }
+        };
+
+        var state = {
+          plan: "bronze",
+          submissions: 0,
+          users: 0,
+          storage: 0,
+          views: 0,
+          domain: false,
+          hipaa: false,
+          branding: false,
+          cycle: "monthly"
+        };
+
+        var els = {
+          plans: document.querySelectorAll('.pc-plan'),
+          rngSubmissions: document.getElementById('rngSubmissions'),
+          rngUsers: document.getElementById('rngUsers'),
+          rngStorage: document.getElementById('rngStorage'),
+          rngViews: document.getElementById('rngViews'),
+          valSubmissions: document.getElementById('valSubmissions'),
+          valUsers: document.getElementById('valUsers'),
+          valStorage: document.getElementById('valStorage'),
+          valViews: document.getElementById('valViews'),
+          chkDomain: document.getElementById('chkDomain'),
+          chkHipaa: document.getElementById('chkHipaa'),
+          chkBranding: document.getElementById('chkBranding'),
+          billBtns: document.querySelectorAll('.pc-bill-btn'),
+          summaryPlanName: document.getElementById('summaryPlanName'),
+          summaryPrice: document.getElementById('summaryPrice'),
+          summaryPer: document.getElementById('summaryPer'),
+          summaryNote: document.getElementById('summaryNote'),
+          summaryList: document.getElementById('summaryList')
+        };
+
+        function calc() {
+          if (state.plan === 'free') {
+            // Free plan locks all sliders to base/free tier
+            state.submissions = 0;
+            state.users = 0;
+            state.storage = 0;
+            state.views = 0;
+            state.domain = false;
+            state.hipaa = false;
+            state.branding = false;
+          }
+
+          var planInfo = basePlans[state.plan];
+          var total = planInfo.base;
+
+          if (state.plan !== 'free') {
+            total += submissionsSteps[state.submissions].cost;
+            total += usersSteps[state.users].cost;
+            total += storageSteps[state.storage].cost;
+            total += viewsSteps[state.views].cost;
+            if (state.domain) total += 10;
+            if (state.hipaa) total += 40;
+            if (state.branding) total += 5;
+          }
+
+          if (state.cycle === 'yearly' && total > 0) {
+            total = Math.round(total * 0.8); // 20% off, shown as monthly-equivalent
+          }
+
+          return { planInfo: planInfo, total: total };
+        }
+
+        function render() {
+          // slider labels
+          els.valSubmissions.textContent = submissionsSteps[state.submissions].label;
+          els.valUsers.textContent = usersSteps[state.users].label;
+          els.valStorage.textContent = storageSteps[state.storage].label;
+          els.valViews.textContent = viewsSteps[state.views].label;
+
+          // disable controls on free plan
+          var isFree = state.plan === 'free';
+          [els.rngSubmissions, els.rngUsers, els.rngStorage, els.rngViews,
+          els.chkDomain, els.chkHipaa, els.chkBranding].forEach(function (el) {
+            el.disabled = isFree;
+            el.parentElement.style.opacity = isFree ? 0.45 : 1;
+          });
+          if (isFree) {
+            els.rngSubmissions.value = 0; els.rngUsers.value = 0;
+            els.rngStorage.value = 0; els.rngViews.value = 0;
+            els.chkDomain.checked = false; els.chkHipaa.checked = false; els.chkBranding.checked = false;
+            els.valSubmissions.textContent = "100";
+            els.valUsers.textContent = "1";
+            els.valStorage.textContent = "500MB";
+            els.valViews.textContent = "100";
+          }
+
+          var result = calc();
+
+          els.summaryPlanName.textContent = result.planInfo.name;
+          els.summaryPlanName.style.color = result.planInfo.color;
+
+          if (result.total === 0) {
+            els.summaryPrice.textContent = "0";
+            els.summaryPer.textContent = "Free forever";
+            els.summaryNote.textContent = "All standard features included";
+          } else {
+            els.summaryPrice.textContent = result.total;
+            els.summaryPer.textContent = "/month";
+            els.summaryNote.textContent = state.cycle === 'yearly' ? "Billed yearly (20% off)" : "Billed monthly";
+          }
+
+          // summary feature list
+          var items = [];
+          if (isFree) {
+            items = ["5 Forms", "100 Monthly Submissions", "1 User", "500MB Storage", "Jotform Branding"];
+          } else {
+            items.push(submissionsSteps[state.submissions].label + " Monthly Submissions");
+            items.push(usersSteps[state.users].label + " Users");
+            items.push(storageSteps[state.storage].label + " Storage Space");
+            items.push(viewsSteps[state.views].label + " Monthly Form Views");
+            if (state.domain) items.push("Custom Domain");
+            if (state.hipaa) items.push("HIPAA Compliance");
+            if (state.branding) items.push("Branding Removed");
+          }
+          els.summaryList.innerHTML = items.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+        }
+
+        // Plan selection
+        els.plans.forEach(function (p) {
+          p.addEventListener('click', function () {
+            els.plans.forEach(function (x) { x.classList.remove('active'); });
+            p.classList.add('active');
+            state.plan = p.dataset.plan;
+            render();
+          });
+        });
+
+        // Sliders
+        els.rngSubmissions.addEventListener('input', function () { state.submissions = +this.value; render(); });
+        els.rngUsers.addEventListener('input', function () { state.users = +this.value; render(); });
+        els.rngStorage.addEventListener('input', function () { state.storage = +this.value; render(); });
+        els.rngViews.addEventListener('input', function () { state.views = +this.value; render(); });
+
+        // Checkboxes
+        els.chkDomain.addEventListener('change', function () { state.domain = this.checked; render(); });
+        els.chkHipaa.addEventListener('change', function () { state.hipaa = this.checked; render(); });
+        els.chkBranding.addEventListener('change', function () { state.branding = this.checked; render(); });
+
+        // Billing cycle
+        els.billBtns.forEach(function (b) {
+          b.addEventListener('click', function () {
+            els.billBtns.forEach(function (x) { x.classList.remove('active'); });
+            b.classList.add('active');
+            state.cycle = b.dataset.cycle;
+            render();
+          });
+        });
+
+        render();
+      })();
+    </script>
+
+    <!-- =========================================================
+  PRICING SECTION — drop this block into your existing page.
+  Includes its own <style>; scope class "pricing-section" keeps
+  it from clashing with your site's other CSS.
+========================================================== -->
+    <section class="pricing-section">
+
+      <!-- Monthly / Yearly toggle -->
+      <div class="pricing-toggle-wrap">
+        <div class="pricing-toggle" id="pricingToggle">
+          <button class="toggle-btn active" data-mode="monthly">Monthly</button>
+          <button class="toggle-btn" data-mode="yearly">Yearly</button>
+        </div>
+        <span class="save-badge">Save up to 20%</span>
+      </div>
+
+      <div class="pricing-grid">
+
+        <!-- Starter -->
+        <div class="price-card">
+          <div class="card-head">
+            <h3 class="plan-name starter">Starter</h3>
+            <div class="plan-price">FREE</div>
+            <p class="plan-sub">All features included</p>
+          </div>
+          <a href="#" class="cta-btn starter-btn">Get Started</a>
+          <ul class="feature-list">
+            <li>5 Forms</li>
+            <li>100 Monthly Submissions</li>
+            <li>1 User Individual Plan</li>
+            <li>500 Available Space</li>
+            <li>100 Monthly Form Views</li>
+            <li>500 Total Submission Storage</li>
+            <li>100 Fields per Form</li>
+            <li>No Custom Domain</li>
+            <li>No HIPAA Compliance</li>
+            <li>Jotform Branding</li>
+          </ul>
+          <button class="limits-toggle">All Agent Limits <span>▾</span></button>
+          <ul class="limits-list">
+            <li>1 Agents</li>
+            <li>10 Monthly Conversations</li>
+            <li>500 Monthly Sessions</li>
+            <li>30 Minutes Monthly Voice Call</li>
+            <li>10 Monthly SMS</li>
+            <li>480 Characters Knowledge Base</li>
+            <li>Phone Number Add On</li>
+          </ul>
+        </div>
+
+        <!-- Bronze -->
+        <div class="price-card">
+          <div class="card-head">
+            <h3 class="plan-name bronze">Bronze</h3>
+            <div class="plan-price"><span class="currency">$</span>39<span class="period">/month</span></div>
+            <p class="plan-sub">Billed monthly</p>
+          </div>
+          <a href="#" class="cta-btn bronze-btn">Get Started</a>
+          <ul class="feature-list">
+            <li>1,000 Monthly Submissions</li>
+            <li>1 User Individual Plan</li>
+            <li>1GB Available Space</li>
+            <li>10,000 Monthly Form Views</li>
+            <li>10,000 Total Submission Storage</li>
+            <li>Unlimited Fields per Form</li>
+            <li>No Custom Domain</li>
+            <li>No HIPAA Compliance</li>
+            <li>No Jotform Branding</li>
+          </ul>
+          <button class="limits-toggle">All Agent Limits <span>▾</span></button>
+          <ul class="limits-list">
+            <li>5 Agents</li>
+            <li>500 Monthly Conversations</li>
+            <li>10,000 Monthly Sessions</li>
+            <li>60 Minutes Monthly Voice Call</li>
+            <li>100 Monthly SMS</li>
+            <li>4,800 Characters Knowledge Base</li>
+            <li>Phone Number Add On</li>
+          </ul>
+        </div>
+
+        <!-- Silver — featured -->
+        <div class="price-card featured">
+          <span class="popular-tag">Most Popular</span>
+          <div class="card-head">
+            <h3 class="plan-name silver">Silver</h3>
+            <div class="plan-price"><span class="currency">$</span>49<span class="period">/month</span></div>
+            <p class="plan-sub">Billed monthly</p>
+          </div>
+          <a href="#" class="cta-btn silver-btn">Get Started</a>
+          <ul class="feature-list">
+            <li>2,500 Monthly Submissions</li>
+            <li>5 User Team Plan</li>
+            <li>2GB Available Space</li>
+            <li>28,000 Monthly Form Views</li>
+            <li>28,000 Total Submission Storage</li>
+            <li>Unlimited Fields per Form</li>
+            <li>Custom Domain</li>
+            <li>No HIPAA Compliance</li>
+            <li>No Jotform Branding</li>
+          </ul>
+          <button class="limits-toggle">All Agent Limits <span>▾</span></button>
+          <ul class="limits-list">
+            <li>10 Agents</li>
+            <li>1,000 Monthly Conversations</li>
+            <li>25,000 Monthly Sessions</li>
+            <li>120 Minutes Monthly Voice Call</li>
+            <li>300 Monthly SMS</li>
+            <li>9,600 Characters Knowledge Base</li>
+            <li>Phone Number Add On</li>
+          </ul>
+        </div>
+
+        <!-- Gold -->
+        <div class="price-card">
+          <div class="card-head">
+            <h3 class="plan-name gold">Gold</h3>
+            <div class="plan-price"><span class="currency">$</span>129<span class="period">/month</span></div>
+            <p class="plan-sub">Billed monthly</p>
+          </div>
+          <a href="#" class="cta-btn gold-btn">Get Started</a>
+          <ul class="feature-list">
+            <li>10,000 Monthly Submissions</li>
+            <li>Unlimited Users</li>
+            <li>10GB Available Space</li>
+            <li>100,000 Monthly Form Views</li>
+            <li>100,000 Total Submission Storage</li>
+            <li>Unlimited Fields per Form</li>
+            <li>Custom Domain</li>
+            <li>HIPAA Compliance</li>
+            <li>No Jotform Branding</li>
+          </ul>
+          <button class="limits-toggle">All Agent Limits <span>▾</span></button>
+          <ul class="limits-list">
+            <li>25 Agents</li>
+            <li>2,500 Monthly Conversations</li>
+            <li>100,000 Monthly Sessions</li>
+            <li>300 Minutes Monthly Voice Call</li>
+            <li>1,000 Monthly SMS</li>
+            <li>24,000 Characters Knowledge Base</li>
+            <li>Phone Number Add On</li>
+          </ul>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="price-card">
+          <div class="card-head">
+            <h3 class="plan-name enterprise">Enterprise</h3>
+            <div class="plan-price small">Custom Price</div>
+            <p class="plan-sub">&nbsp;</p>
+          </div>
+          <a href="#" class="cta-btn enterprise-btn">Get a Quote</a>
+          <ul class="feature-list">
+            <li>Unlimited Form &amp; Submissions</li>
+            <li>Multiuse Platform</li>
+            <li>Dedicated Support</li>
+            <li>User Management</li>
+            <li>Single Sign-On (SSO)</li>
+            <li>Service Level Agreements (SLA)</li>
+            <li>Data Residency</li>
+            <li>Professional Services</li>
+            <li>HIPAA Enabled Features Available</li>
+            <li>Custom Branding &amp; Domain</li>
+          </ul>
+          <button class="limits-toggle">All Agent Limits <span>▾</span></button>
+          <ul class="limits-list">
+            <li>Unlimited Agents</li>
+            <li>Unlimited Monthly Conversations</li>
+            <li>Unlimited Monthly Sessions</li>
+            <li>Unlimited Monthly Voice Call</li>
+            <li>Unlimited Monthly SMS</li>
+            <li>Custom Knowledge Base</li>
+            <li>Phone Number Add On</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <style>
+      .pricing-section {
+        --starter: #22c55e;
+        --bronze: #e2601c;
+        --silver: #2563eb;
+        --gold: #e6a91a;
+        --enterprise: #6d28d9;
+        --card-bg: #f4f5fb;
+        --text-dark: #1f2430;
+        --text-muted: #6b7280;
+        font-family: "Segoe UI", Arial, sans-serif;
+        padding: 48px 24px;
+        box-sizing: border-box;
+      }
+
+      .pricing-section * {
+        box-sizing: border-box;
+      }
+
+      /* Toggle */
+      .pricing-toggle-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 32px;
+      }
+
+      .pricing-toggle {
+        display: inline-flex;
+        background: #eceef5;
+        border-radius: 999px;
+        padding: 4px;
+      }
+
+      .toggle-btn {
+        border: none;
+        background: transparent;
+        padding: 8px 20px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: all .2s ease;
+      }
+
+      .toggle-btn.active {
+        background: #fff;
+        color: var(--text-dark);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+      }
+
+      .save-badge {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--silver);
+        background: #e8efff;
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
+
+      /* Grid */
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 16px;
+        max-width: 1200px;
+        margin: 0 auto;
+        align-items: start;
+      }
+
+      @media (max-width:1100px) {
+        .pricing-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width:600px) {
+        .pricing-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Card */
+      .price-card {
+        position: relative;
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 24px 18px;
+        text-align: center;
+        border: 1px solid transparent;
+      }
+
+      .price-card.featured {
+        background: #fff;
+        border: 2px solid var(--silver);
+        box-shadow: 0 8px 24px rgba(37, 99, 235, .15);
+        transform: translateY(-6px);
+      }
+
+      .popular-tag {
+        position: absolute;
+        top: -13px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--silver);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 999px;
+        letter-spacing: .3px;
+      }
+
+      .card-head {
+        margin-bottom: 14px;
+      }
+
+      .plan-name {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 4px 0;
+      }
+
+      .plan-name.starter {
+        color: var(--starter);
+      }
+
+      .plan-name.bronze {
+        color: var(--bronze);
+      }
+
+      .plan-name.silver {
+        color: var(--silver);
+      }
+
+      .plan-name.gold {
+        color: var(--gold);
+      }
+
+      .plan-name.enterprise {
+        color: var(--enterprise);
+      }
+
+      .plan-price {
+        font-size: 34px;
+        font-weight: 800;
+        color: var(--text-dark);
+        margin: 6px 0 2px;
+      }
+
+      .plan-price.small {
+        font-size: 20px;
+      }
+
+      .plan-price .currency {
+        font-size: 20px;
+        vertical-align: top;
+        position: relative;
+        top: 6px;
+      }
+
+      .plan-price .period {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      .plan-sub {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin: 0;
+      }
+
+      .cta-btn {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        border-radius: 8px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 14px;
+        text-decoration: none;
+        margin-bottom: 20px;
+        transition: opacity .2s ease;
+      }
+
+      .cta-btn:hover {
+        opacity: .88;
+      }
+
+      .starter-btn {
+        background: var(--starter);
+      }
+
+      .bronze-btn {
+        background: var(--bronze);
+      }
+
+      .silver-btn {
+        background: var(--silver);
+      }
+
+      .gold-btn {
+        background: var(--gold);
+      }
+
+      .enterprise-btn {
+        background: var(--enterprise);
+      }
+
+      .feature-list {
+        list-style: none;
+        margin: 0 0 8px;
+        padding: 0;
+        text-align: left;
+      }
+
+      .feature-list li {
+        font-size: 13px;
+        color: var(--text-dark);
+        padding: 6px 0;
+        border-bottom: 1px solid #e5e7ef;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      .feature-list li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #16a34a;
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      .limits-toggle {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-top: 1px solid #d9dcea;
+        padding: 10px 0;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-dark);
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .limits-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        display: none;
+      }
+
+      .limits-list.open {
+        display: block;
+      }
+
+      .limits-list li {
+        font-size: 12px;
+        color: var(--text-muted);
+        padding: 5px 0 5px 20px;
+        position: relative;
+      }
+
+      .limits-list li::before {
+        content: "•";
+        position: absolute;
+        left: 4px;
+        color: var(--text-muted);
+      }
+    </style>
+
+    <script>
+      (function () {
+        // Monthly / Yearly toggle (swap in your own price data as needed)
+        var prices = {
+          monthly: { starter: "FREE", bronze: 39, silver: 49, gold: 129 },
+          yearly: { starter: "FREE", bronze: 34, silver: 39, gold: 99 }
+        };
+        var toggle = document.getElementById('pricingToggle');
+        if (toggle) {
+          toggle.addEventListener('click', function (e) {
+            var btn = e.target.closest('.toggle-btn');
+            if (!btn) return;
+            toggle.querySelectorAll('.toggle-btn').forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var mode = btn.dataset.mode;
+            var cards = document.querySelectorAll('.price-card');
+            var order = ['starter', 'bronze', 'silver', 'gold']; // enterprise stays "Custom Price"
+            cards.forEach(function (card, i) {
+              var key = order[i];
+              if (!key) return;
+              var priceEl = card.querySelector('.plan-price');
+              var subEl = card.querySelector('.plan-sub');
+              var val = prices[mode][key];
+              if (val === "FREE") {
+                priceEl.innerHTML = "FREE";
+              } else {
+                priceEl.innerHTML = '<span class="currency">$</span>' + val + '<span class="period">/month</span>';
+              }
+              if (subEl) subEl.textContent = mode === 'monthly' ? 'Billed monthly' : 'Billed yearly';
+            });
+          });
+        }
+
+        // Expand/collapse "All Agent Limits"
+        document.querySelectorAll('.limits-toggle').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var list = btn.nextElementSibling;
+            list.classList.toggle('open');
+            var arrow = btn.querySelector('span');
+            arrow.textContent = list.classList.contains('open') ? '▴' : '▾';
+          });
+        });
+      })();
+    </script>
   </main>
   <div id="vareon-chat-widget"></div>
   <div id="footer-placeholder"></div>

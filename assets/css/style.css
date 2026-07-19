@@ -55,8 +55,8 @@
   --color-error: #ef4444;
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-heading: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Inter', sans-serif;
 
   /* Spacing (8px base) */
   --space-1: 0.25rem;
@@ -386,6 +386,7 @@ p {
 }
 
 .header-inner {
+  padding-top: 11px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -432,7 +433,7 @@ p {
 .site-nav {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 7px;
 }
 
 .nav-item {
@@ -671,6 +672,41 @@ p {
 /* ===================================================================
    HERO
 =================================================================== */
+
+/* Futuristic pattern background layer (Uiverse.io by chase2k25) */
+.futuristic-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(295deg,
+      rgba(59, 43, 124, 0.9),
+      rgba(106, 76, 169, 0.9),
+      rgba(155, 108, 214, 0.9));
+  filter: url(#advanced-texture);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.futuristic-pattern .texture-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.futuristic-pattern .ripple-overlay {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+/* Make sure hero content sits above the pattern */
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
 .hero {
   position: relative;
   min-height: calc(100vh - var(--nav-height));
@@ -772,7 +808,6 @@ p {
   flex-wrap: wrap;
 }
 
-.hero-stat-item {}
 
 .hero-stat-num {
   font-family: var(--font-heading);
@@ -858,6 +893,13 @@ p {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  max-height: 340px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.chat-messages::-webkit-scrollbar {
+  display: none;
 }
 
 .chat-bubble {
